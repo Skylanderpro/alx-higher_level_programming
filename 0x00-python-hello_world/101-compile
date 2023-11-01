@@ -1,2 +1,21 @@
 #!/bin/bash
-python3 -m py_compile "$PYFILE" -o "$PYFILE"c
+
+# Check if PYFILE environment variable is set
+if [ -z "$PYFILE" ]; then
+	  echo "PYFILE environment variable is not set."
+	    exit 1
+fi
+
+# Get the base name of the Python file (without the extension)
+base_name="${PYFILE%.*}"
+
+# Compile the Python script
+python -m py_compile "$PYFILE"
+
+# Check if compilation was successful
+if [ $? -eq 0 ]; then
+	  echo "Compilation successful. Compiled file: $base_name.pyc"
+  else
+	    echo "Compilation failed."
+	      exit 1
+fi
