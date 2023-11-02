@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-lowercase = False
+lowercase = True
 for char in reversed(range(ord('a'), ord('z') + 1)):
     if lowercase:
         print("{}".format(chr(char)), end="")
