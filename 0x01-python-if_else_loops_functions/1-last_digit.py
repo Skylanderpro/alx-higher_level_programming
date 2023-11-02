@@ -8,7 +8,7 @@ if number < 0:
 else:
     last_digit = number % 10
 
-message = "is"
+message = "and is"
 
 if last_digit > 5:
     message += " greater than 5"
