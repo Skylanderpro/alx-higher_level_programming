@@ -9,7 +9,8 @@ def multiple_returns(sentence):
     - sentence (str): The input string.
 
     Returns:
-    - tuple: A tuple containing the length of the string and its first character.
+    - tuple: A tuple containing the length of the string and its first
+    character.
     """
     if not sentence:
         return (0, None)
