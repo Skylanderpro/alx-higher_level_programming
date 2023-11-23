@@ -7,9 +7,6 @@
  */
 void print_python_list(PyObject *p)
 {
-	Py_ssize_t size, i;
-	PyObject *element;
-
 	printf("[*] Python list info\n");
 
 	if (!PyList_Check(p))
@@ -18,26 +15,23 @@ void print_python_list(PyObject *p)
 		return;
 	}
 
-	size = PyObject_Size(p);
-	printf("[*] Size of the Python List = %ld\n", size);
+	printf("[*] Size of the Python List = %ld\n", ((PyVarObject *)p)->ob_size);
 	printf("[*] Allocated = %ld\n", ((PyListObject *)p)->allocated);
 
-	for (i = 0; i < size; ++i)
+	Py_ssize_t size = ((PyVarObject *)p)->ob_size;
+	for (Py_ssize_t i = 0; i < size; ++i)
 	{
-		element = PyList_GetItem(p, i);
+		PyObject *element = ((PyListObject *)p)->ob_item[i];
 		printf("Element %ld: %s\n", i, element->ob_type->tp_name);
 	}
 }
 
 /**
- *print_python_bytes - prints python bytes
- *@p: python byte objects
+ * print_python_bytes - prints python bytes
+ * @p: python byte objects
  */
 void print_python_bytes(PyObject *p)
 {
-	Py_ssize_t size, i;
-	char *string;
-
 	printf("[.] bytes object info\n");
 
 	if (!PyBytes_Check(p))
@@ -46,26 +40,22 @@ void print_python_bytes(PyObject *p)
 		return;
 	}
 
-	size = PyObject_Size(p);
-	printf("  size: %ld\n", size);
+	printf("  size: %ld\n", ((PyVarObject *)p)->ob_size);
 	printf("  trying string: %s\n", ((PyBytesObject *)p)->ob_sval);
 
-	printf("  first %ld bytes: ", (size > 10 ? 10 : size));
-	string = ((PyBytesObject *)p)->ob_sval;
-	for (i = 0; i < size && i < 10; ++i)
+	printf("  first %ld bytes: ", (((PyVarObject *)p)->ob_size > 10 ? 10 : ((PyVarObject *)p)->ob_size));
+	for (Py_ssize_t i = 0; i < (((PyVarObject *)p)->ob_size > 10 ? 10 : ((PyVarObject *)p)->ob_size); ++i)
 	{
-		printf("%02x", (unsigned char)string[i]);
-		if (i != size - 1 && i != 9)
+		printf("%02x", (unsigned char)(((PyBytesObject *)p)->ob_sval[i]));
+		if (i != (((PyVarObject *)p)->ob_size - 1) && i != 9)
 			printf(" ");
 	}
 	printf("\n");
 }
-
 /**
  * print_python_float - prints python floats
  * @p: python float objects
  */
-
 void print_python_float(PyObject *p)
 {
 	printf("[.] float object info\n");
