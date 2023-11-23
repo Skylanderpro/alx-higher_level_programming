@@ -7,12 +7,13 @@ def safe_print_list_integers(my_list=[], x=0):
             if count < x:
                 try:
                     if isinstance(i, int):
-                        print("{:d}".format(i))
+                        print("{:d}".format(i), end="")
                         count += 1
                 except (ValueError, TypeError):
                     continue
             else:
                 break
+        print()
         return count
     except Exception as e:
         print("Traceback (most recent call last):")
