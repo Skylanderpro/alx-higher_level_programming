@@ -26,11 +26,8 @@ class Square:
             """
             Set the size of the square.
             """
-            if not isinstance(value, int):
-                try:
-                    value = int(value)
-                except ValueError:
-                    raise TypeError("size must be an integer")
+            if type(value) is str:
+                raise TypeError("size must be an integer")
 
             if not isinstance(value, int):
                 raise TypeError("size must be an integer")
