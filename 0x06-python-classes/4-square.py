@@ -26,7 +26,7 @@ class Square:
             """
             Set the size of the square.
             """
-            if not isinstance(size, int):
+            if not isinstance(size, int) and not value.isdigit():
                 raise TypeError("size must be an integer")
             elif size < 0:
                 raise ValueError("size must be >= 0")
